@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
   <header class="text-white">
     <div class="wrapper">
-      <nav class="navbar navbar-expand-lg bg-primary ">
+      <nav class="navbar navbar-expand-lg bg-dark  navbar-dark">
         <div class="container-fluid">
           <RouterLink class="navbar-brand" to="/">Student CRUD</RouterLink>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
