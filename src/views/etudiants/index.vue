@@ -4,7 +4,7 @@
       <div class="card shadow">
         <div class="card-header">
           <h4>Liste des étudiants
-            <RouterLink class="btn btn-primary btn-sm float-end" to="/etudiants/create">Ajouter</RouterLink>
+            <RouterLink class="btn btn-primary btn-sm float-end" to="/students/create">Ajouter</RouterLink>
           </h4>
         </div>
         <div class="card-body">
@@ -19,15 +19,15 @@
                 <th colspan="2" class="text-center">Action</th>
               </tr>
             </thead>
-            <tbody v-if="this.etudiants.length > 0">
-              <tr v-for="(etudiants, index) in this.etudiants" :key="index">
-                <td>{{ etudiants.nom }}</td>
-                <td>{{ etudiants.prenom }}</td>
-                <td>{{ etudiants.cours }}</td>
-                <td>{{ etudiants.email }}</td>
-                <td>{{ etudiants.telephone }}</td>
+            <tbody v-if="this.students.length > 0">
+              <tr v-for="(student, index) in this.students" :key="index">
+                <td>{{ student.nom }}</td>
+                <td>{{ student.prenom }}</td>
+                <td>{{ student.cours }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.telephone }}</td>
                 <td>
-                  <RouterLink :to="{path: '/etudiants/edit/'+etudiants.id}" class="btn btn-success btn-sm">Modifier</RouterLink>
+                  <RouterLink :to="{path: '/students/edit/'+student.id}" class="btn btn-success btn-sm">Modifier</RouterLink>
                 </td>
                 <td>
                   <RouterLink to="/" class="btn btn-danger btn-sm">SUpprimer</RouterLink>
@@ -46,12 +46,13 @@
   </template>
 
 <script>
-  import axios from 'axios';
+  import axios from 'axios'
+  
   export default {
-    name: 'etudiants',
+    name: 'students',
     data(){
       return {
-        etudiants:[]
+        students: []
       }
     },
     mounted(){
@@ -61,9 +62,9 @@
     
     methods: {
       getStudents(){
-        axios.get('http://127.0.0.1:8000/api/etudiant').then(res => {
-          this.etudiants = res.data.message
-          // console.log(this.etudiants)
+        axios.get('http://127.0.0.1:8000/api/students').then(res => {
+          this.students = res.data.students
+          // console.log(this.students)
 
         });
       }

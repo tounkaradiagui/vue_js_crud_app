@@ -4,7 +4,7 @@
             <div class="card-header">
                 <h4>
                     Modification des infos
-                    <RouterLink to="/etudiants" class="btn btn-danger float-end btn-sm">Retour</RouterLink>
+                    <RouterLink to="/students" class="btn btn-danger float-end btn-sm">Retour</RouterLink>
                 </h4>
             </div>
             <div class="card-body">
@@ -16,35 +16,35 @@
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="">Nom</label>
-                        <input type="text" v-model="model.etudiant.nom" class="form-control"/>
+                        <input type="text" v-model="model.student.nom" class="form-control"/>
                     </div>
                     
                     <div class="mb-3 col-md-6">
                         <label for="">Prénom</label>
-                        <input type="text" v-model="model.etudiant.prenom" class="form-control"/>
+                        <input type="text" v-model="model.student.prenom" class="form-control"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="">Cours</label>
-                        <input type="text" v-model="model.etudiant.cours" class="form-control"/>
+                        <input type="text" v-model="model.student.cours" class="form-control"/>
                     </div>
                     
                     <div class="mb-3 col-md-6">
                         <label for="">Email</label>
-                        <input type="email" v-model="model.etudiant.email" class="form-control"/>
+                        <input type="email" v-model="model.student.email" class="form-control"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="">Téléphone</label>
-                        <input type="text" v-model="model.etudiant.telephone" class="form-control"/>
+                        <input type="text" v-model="model.student.telephone" class="form-control"/>
                     </div>
                     
                     <div class="mt-4 col-md-6">
-                        <button type="button" @click="saveStudent" class="btn btn-success">Valider</button>
+                        <button type="button" @click="updateStudent" class="btn btn-success">Valider</button>
                     </div>
                 </div>
             </div>
@@ -55,13 +55,14 @@
 <script>
     import axios from 'axios';
 
-    export default{
-        name: 'editEtudiant',
+    export default {
+        name: 'studentEdit',
         data(){
             return {
+                studentId : '',
                 errorList: '',
                 model: {
-                    etudiant:{
+                    student: {
                         nom: '',
                         prenom: '',
                         cours: '',
@@ -74,40 +75,51 @@
 
         mounted(){
             // console.log(this.$route.params.id);
-             this.getStudentData(this.$route.params.id);
+
+            this.studentId = this.$route.params.id;
+            this.getStudentData(this.$route.params.id);
         },
 
         methods: {
 
-            getStudentData(studenId){
-                axios.get(`http://127.0.0.1:8000/api/etudiant/edit/${studenId}`)
-                .then(res => {
-                    console.log(res.data.etudiant);
-                    this.model.etudiant.nom = res.data.etudiant.nom
+            getStudentData(studentId){
+
+                axios.get(`http://127.0.0.1:8000/api/students/edit/${studentId}`)
+                    .then(res => {
+                        console.log(res.data.student);
+                        this.model.student = res.data.student
+                    
+                })
+                .catch(function(error){
+                    if (error.response) {
+                        if (error.response.status == 404) {
+                            alert(error.response.data.message);
+                        }
+                    } 
                 });
+
             },
 
-            saveStudent(){
+            updateStudent(){
                 var mythis = this;
-                axios.post('http://127.0.0.1:8000/api/etudiant', this.model.etudiant )
+                axios.put(`http://127.0.0.1:8000/api/students/edit/${this.studentId}`, this.model.student )
                     .then(res => {
 
                     console.log(res.data)
                     alert(res.data.message);
-
-                    this.model.etudiant = {
-                        nom: '',
-                        prenom: '',
-                        cours: '',
-                        email: '',
-                        telephone: ''
-                    }
+                    
                     this.errorList = '';
-                }).catch(function(error){
+                })
+                .catch(function(error){
                     if (error.response) {
                         if (error.response.status == 422) {
                             mythis.errorList = error.response.data.errors;
                         }
+
+                        if (error.response.status == 404) {
+                            alert(error.response.data.message);
+                        }
+
                         // console.log(error.response.data);
                         // console.log(error.response.status);
                         // console.log(error.response.headers);

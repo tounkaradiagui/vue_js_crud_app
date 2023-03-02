@@ -4,7 +4,7 @@
             <div class="card-header">
                 <h4>
                     Ajout d'étudants
-                    <RouterLink to="/etudiants" class="btn btn-danger float-end btn-sm">Retour</RouterLink>
+                    <RouterLink to="/students" class="btn btn-danger float-end btn-sm">Retour</RouterLink>
                 </h4>
             </div>
             <div class="card-body">
@@ -16,31 +16,31 @@
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="">Nom</label>
-                        <input type="text" v-model="model.etudiant.nom" class="form-control"/>
+                        <input type="text" v-model="model.student.nom" class="form-control"/>
                     </div>
                     
                     <div class="mb-3 col-md-6">
                         <label for="">Prénom</label>
-                        <input type="text" v-model="model.etudiant.prenom" class="form-control"/>
+                        <input type="text" v-model="model.student.prenom" class="form-control"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="">Cours</label>
-                        <input type="text" v-model="model.etudiant.cours" class="form-control"/>
+                        <input type="text" v-model="model.student.cours" class="form-control"/>
                     </div>
                     
                     <div class="mb-3 col-md-6">
                         <label for="">Email</label>
-                        <input type="email" v-model="model.etudiant.email" class="form-control"/>
+                        <input type="email" v-model="model.student.email" class="form-control"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="">Téléphone</label>
-                        <input type="text" v-model="model.etudiant.telephone" class="form-control"/>
+                        <input type="text" v-model="model.student.telephone" class="form-control"/>
                     </div>
                     
                     <div class="mt-4 col-md-6">
@@ -61,7 +61,7 @@
             return {
                 errorList: '',
                 model: {
-                    etudiant:{
+                    student:{
                         nom: '',
                         prenom: '',
                         cours: '',
@@ -75,13 +75,13 @@
         methods: {
             saveStudent(){
                 var mythis = this;
-                axios.post('http://127.0.0.1:8000/api/etudiant', this.model.etudiant )
+                axios.post('http://127.0.0.1:8000/api/students', this.model.etudiant )
                     .then(res => {
 
                     console.log(res.data)
                     alert(res.data.message);
 
-                    this.model.etudiant = {
+                    this.model.student = {
                         nom: '',
                         prenom: '',
                         cours: '',

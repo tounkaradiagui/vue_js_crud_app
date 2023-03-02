@@ -23,19 +23,19 @@ const router = createRouter({
     },
 
     {
-      path: '/etudiants',
+      path: '/students',
       name: 'etudiants',
       component: EtudiantVue
     },
 
     {
-      path: '/etudiants/create',
+      path: '/students/create',
       name: 'etudiantsCreate',
       component: CreateEtudiant
     },
 
     {
-      path: '/etudiants/edit/:id',
+      path: '/students/edit/:id',
       name: 'editEtudiant',
       component: EditEtudiant
     },
