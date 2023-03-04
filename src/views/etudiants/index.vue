@@ -27,10 +27,10 @@
                 <td>{{ student.email }}</td>
                 <td>{{ student.telephone }}</td>
                 <td>
-                  <RouterLink :to="{path: '/students/edit/'+student.id}" class="btn btn-success btn-sm">Modifier</RouterLink>
+                  <RouterLink :to="{path: '/students/edit/'+student.id}" class="btn btn-success btn-sm">Edit</RouterLink>
                 </td>
                 <td>
-                  <RouterLink to="/" class="btn btn-danger btn-sm">SUpprimer</RouterLink>
+                  <RouterLink to="/" @click="deleteStudent(student.id)" class="btn btn-danger btn-sm">Delete</RouterLink>
                 </td>
               </tr>
             </tbody>
@@ -67,7 +67,25 @@
           // console.log(this.students)
 
         });
-      }
+      },
+
+      deleteStudent(studentId){
+        if(confirm("Voulez - vous vraiment supprimer cet étudiant ?"))
+          // console.log(studentId)
+          axios.delete(`http://127.0.0.1:8000/api/students/delete/${studentId}`)
+          .then(res => {
+            alert(res.data.message);
+            this.getStudents();
+
+        })
+        .catch(function(error){
+          if (error.response) {
+              if (error.response.status == 404) {
+                  alert(error.response.data.message);
+              }
+          } 
+        });
+      },
     },
   }
 </script>
